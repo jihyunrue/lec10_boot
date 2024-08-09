@@ -23,6 +23,16 @@ public class BoardService {
 		this.boardRepository = boardRepository;
 	}
 	
+	public BoardDto selectBoardOne(Long board_no) {
+		Board board = boardRepository.findByboardNo(board_no);
+		BoardDto dto = new BoardDto().toDto(board);
+		return dto;
+	}
+	public Board createBoard(BoardDto dto) {
+		Board board = dto.toEntity();
+		return boardRepository.save(board);
+	}
+	
 	public Page<BoardDto> selectBoardList(BoardDto searchDto, Pageable pageable){
 		Page<Board> boardList = null;
 //		String boardTitle = searchDto.getBoard_title();
@@ -69,6 +79,8 @@ public class BoardService {
 //		return boardDtoList;
 		
 	}
+	
+
 	
 }
 		
