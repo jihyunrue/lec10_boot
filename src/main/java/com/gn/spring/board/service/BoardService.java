@@ -23,9 +23,31 @@ public class BoardService {
 		this.boardRepository = boardRepository;
 	}
 	
-	public Page<BoardDto> selectBoardList(Pageable pageable){
-		
-		Page<Board> boardList = boardRepository.findAll(pageable);
+	public Page<BoardDto> selectBoardList(BoardDto searchDto, Pageable pageable){
+		Page<Board> boardList = null;
+//		String boardTitle = searchDto.getBoard_title();
+//		if(boardTitle != null && !"".equals(boardTitle)) {
+//			boardList = boardRepository.findByboardTitleContaining(boardTitle, pageable);
+//		}else {
+//			boardList = boardRepository.findAll(pageable);
+//		}
+		String searchText = searchDto.getSearch_text();
+		if(searchText != null && "".equals(searchText) == false) {
+			int searchType = searchDto.getSearch_type();
+			switch(searchType) {
+			case 1 :
+				boardList = boardRepository.findByboardTitleContaining(searchText, pageable);
+				break;
+			case 2 :
+				boardList = boardRepository.findByboardContentContaining(searchText,pageable);
+				break;
+			case 3 : 
+				boardList = boardRepository.findByboardTitleOrboardContentContaining(searchText,pageable);
+				break;
+			}
+		}else {
+			boardList = boardRepository.findAll(pageable);
+		}
 		
 		List<BoardDto> boardDtoList = new ArrayList<BoardDto>();
 		for(Board b : boardList) {
@@ -33,7 +55,7 @@ public class BoardService {
 			boardDtoList.add(dto);
 		}
 		
-			
+		
 		return new PageImpl<>(boardDtoList, pageable, boardList.getTotalElements());
 		
 		
@@ -49,3 +71,7 @@ public class BoardService {
 	}
 	
 }
+		
+		
+		
+		

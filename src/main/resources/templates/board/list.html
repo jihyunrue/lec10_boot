@@ -62,14 +62,14 @@
 						"
 					>
 					<th:block th:if="${!resultList.first}">
-							<a th:href="${resultList.first} ? '#' : @{/board(page=${pageNumber - 1})}">&lt;</a>
+							<a th:href="${resultList.first} ? '#' : @{/board(page=${pageNumber - 1},search_text=${searchDto.search_text},search_type=${searchDto.search_type})}">&lt;</a>
 						</th:block>
 						<!-- * 컬렉션을 반복하는 것이 아니라 단순히 숫자만 반복할때 #numbers사용-->
 						<th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
-							<a th:text="${page}" th:href="@{/board(page=${page} - 1)}" th:classappend="${page == pageNumber + 1} ? 'active'">1</a>
+							<a th:text="${page}" th:href="@{/board(page=${page} - 1,search_text=${searchDto.search_text},search_type=${searchDto.search_type})}" th:classappend="${page == pageNumber + 1} ? 'active'">1</a>
 						</th:block>
 						<th:block th:if="${!resultList.last}">
-							<a th:href="${resultList.last} ? '#' : @{/board(page=${pageNumber + 1})}">&gt;</a>
+							<a th:href="${resultList.last} ? '#' : @{/board(page=${pageNumber + 1},search_text=${searchDto.search_text},search_type=${searchDto.search_type})}">&gt;</a>
 						</th:block>
 					</div>
 				</div>

@@ -14,10 +14,31 @@
 					</li>
 				</ul>
 			</div>
-			<div class="search">
-				<form>
-					<input type="text">
-					<input type="button" value="검색">
+			<div class="search" th:if="${searchDto != null}">
+				<form th:action="@{/board}" th:object="${searchDto}" method="get">
+					<!-- <input type="text" name="board_title" 
+					th:field="*{board_title}" placeholder="검색어를 입력하세요"> -->
+					<select name="search_type" th:value="${searchDto.search_type}">
+						<option th:value="1" th:selected="${searchDto.search_type} == '1'">제목</option>
+						<option th:value="2" th:selected="${searchDto.search_type} == '2'">내용</option>
+						<option th:value="3" th:selected="${searchDto.search_type} == '3'">제목+내용</option>
+					</select> 
+					<input type="text" name="search_text" 
+					th:field="*{search_text}" placeholder="검색어를 입력하세요">
+					<input type="submit" value="검색">
+				</form>
+			</div>
+			<div class="search" th:if="${searchDto == null}">
+				<form th:action="@{/board}" method="get">
+					<!-- <input type="text" name="board_title" placeholder="검색어를 입력하세요"> -->
+					<select name="search_type">
+						<option th:value="1">제목</option>
+						<option th:value="2">내용</option>
+						<option th:value="3">제목+내용</option>
+					</select> 
+					<input type="text" name="search_text" 
+					 placeholder="검색어를 입력하세요">
+					<input type="submit" value="검색">
 				</form>
 			</div>
 		</div>

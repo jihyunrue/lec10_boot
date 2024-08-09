@@ -25,6 +25,9 @@ public class BoardDto {
 	private String ori_thumbnail;
 	private String new_thumbnail;
 	
+	private int search_type = 1;
+	private String search_text;
+	
 	// DTO로 구성한 정보를 Entity로 변경
 	// DB에 반영해주기 위해서
 	public Board toEntity() {
