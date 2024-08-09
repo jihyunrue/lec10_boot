@@ -1,6 +1,7 @@
 package com.gn.spring.board.service;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,8 +37,9 @@ public class FileService {
 			Board b = boardRepository.findByboardNo(board_no);
 			
 			String newFileName = b.getNewThumbnail();
-			String oriFileName = b.getOriThumbnail();
+			String oriFileName = URLEncoder.encode(b.getOriThumbnail(),"UTF-8");
 			String downDir = fileDir+newFileName;
+			
 			Path filePath = Paths.get(downDir);
 			Resource resource = new InputStreamResource(Files.newInputStream(filePath));
 			
