@@ -58,7 +58,7 @@ public class BoardApiController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/board/{voard_no}")
+	@PostMapping("/board/{board_no}")
 	public Map<String,String> updateBoard(BoardDto dto,
 			@RequestParam(name="file", required=false)MultipartFile file){
 		Map<String, String> resultMap = new HashMap<String,String>();
@@ -68,9 +68,14 @@ public class BoardApiController {
 		if(file != null && "".equals(file.getOriginalFilename()) == false) {
 			String savedFileName = fileService.upload(file);
 			if(savedFileName != null) {
-		
 				dto.setOri_thumbnail(file.getOriginalFilename());
 				dto.setNew_thumbnail(savedFileName);
+				if(fileService.delete(dto.getBoard_no()) > 0) {
+					resultMap.put("res_msg", "기존 파일이 정상적으로 삭제되었습니다.");
+				}
+				
+				
+				
 			}else {
 				resultMap.put("res_msg","파일 업로드가 실패하엿습니다.");
 			}
@@ -85,3 +90,4 @@ public class BoardApiController {
 	}
 	
 }
+		

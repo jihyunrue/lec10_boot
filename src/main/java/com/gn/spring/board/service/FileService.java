@@ -1,6 +1,7 @@
 package com.gn.spring.board.service;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,6 +33,33 @@ public class FileService {
 	public FileService(BoardRepository boardRepository) {
 		this.boardRepository = boardRepository;
 	}
+	
+
+	public int delete(Long board_no){
+		int result = -1;
+		try {
+			
+		Board b = boardRepository.findByboardNo(board_no);
+		
+		String newFileName = b.getNewThumbnail();  //UUID
+		String oriFileName = b.getOriThumbnail();  // 사용자가 아는 파일명
+		
+		String resultDir = fileDir+URLDecoder.decode(newFileName,"UTF-8");
+		
+		if(resultDir != null && resultDir.isEmpty() == false) {
+			File file = new File(resultDir);
+			
+			if(file.exists()) {
+				file.delete();
+				result = 1;
+			}
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+			
 	public ResponseEntity<Object> download(Long board_no){
 		try {
 			Board b = boardRepository.findByboardNo(board_no);
