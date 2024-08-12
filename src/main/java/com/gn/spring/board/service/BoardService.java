@@ -100,9 +100,23 @@ public class BoardService {
 		
 	}
 	
+	// jpa에서 삭제했을 때 리턴 타입은 void 
+	// delete는 잘 삭제되었는지 판단할 수가 없기때문에 리턴값을 int로 바꾸고 try~catch문 안에다가 넣어주기
+	public int deleteBoard(Long board_no) {
+		int result = 0;
+		try {
+			boardRepository.deleteById(board_no);
+			result = 1;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+}
+			
+	
 
 	
-}
 		
 		
 		

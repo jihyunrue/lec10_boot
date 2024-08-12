@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -87,6 +88,24 @@ public class BoardApiController {
 		}
 		
 		return resultMap;
+	}
+	
+	@ResponseBody
+	@DeleteMapping("/board/{board_no}")
+	public Map<String,String> deleteBoard(@PathVariable("board_no") Long board_no){
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("res_code", "404");
+		map.put("res_msg", "게시글 삭제중 오류가 발생했습니다.");
+		
+		if(fileService.delete(board_no) > 0) {
+			map.put("res_msg", "기존 파일이 정상적으로 삭제되었습니다.");
+			if(boardService.deleteBoard(board_no) > 0) {
+				map.put("res_code", "200");
+				map.put("res_msg", "정상적으로 게시글이 삭제되었습니다.");
+			}
+		}
+		return map;
+		
 	}
 	
 }
