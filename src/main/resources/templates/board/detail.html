@@ -28,8 +28,16 @@
 								<td th:text="${dto.board_content}"></td>
 							</tr>
 							<tr>
+								<td>작성자</td>
+								<td th:text="${dto.board_writer_name}"></td>
+							</tr>
+							<tr>
 								<td>등록일</td>
 								<td th:text="${#temporals.format(dto.reg_date, 'yy-MM-dd HH:mm:ss')}"></td>
+							</tr>
+							<tr>
+								<td>수정일</td>
+								<td th:text="${#temporals.format(dto.mod_date, 'yy-MM-dd HH:mm:ss')}"></td>
 							</tr>
 						</table>
 					</li>

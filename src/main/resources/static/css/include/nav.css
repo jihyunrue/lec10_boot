@@ -36,3 +36,10 @@ nav {
 	border-radius: 5px;
 	cursor: pointer;
 }
+
+#nav_wrap .menu form input[type='submit']{
+  border: 0;
+  background-color: transparent;
+  cursor : pointer;
+  font-size : 16px;
+}

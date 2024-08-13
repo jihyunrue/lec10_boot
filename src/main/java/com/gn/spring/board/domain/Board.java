@@ -5,11 +5,15 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.gn.spring.member.domain.Member;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,8 +40,12 @@ public class Board {
 	@Column(name="board_content")
 	private String boardContent;
 	
-	@Column(name="board_writer")
-	private Long boardWriter;
+//	@Column(name="board_writer")
+//	private Long boardWriter;
+	
+	@ManyToOne
+	@JoinColumn(name="board_writer")
+	private Member member;
 	
 	@Column(name="reg_date")
 	@CreationTimestamp
