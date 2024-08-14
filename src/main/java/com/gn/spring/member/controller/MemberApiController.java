@@ -30,11 +30,11 @@ public class MemberApiController {
 	@PostMapping("/join")
 	public Map<String,String> joinMember(@RequestBody MemberDto dto){
 		Map<String,String> resultMap = new HashMap<String,String>();
-		resultMap.put("res_codre", "404");
+		resultMap.put("res_code", "404");
 		resultMap.put("res_msg", "회원가입중 오류가 발생했습니다.");
 		
 		if(memberService.createMember(dto) > 0) {
-			resultMap.put("res_codre", "200");
+			resultMap.put("res_code", "200");
 			resultMap.put("res_msg", "성공적으로 회원가입 되었습니다.");
 		};
 		return resultMap;

@@ -30,52 +30,51 @@
 		</section>	
 		<script>
 			const form = document.getElementById("memberAddFrm");
-			form.addEventListener('submit',(e) => {
+			form.addEventListener('submit', (e)=>{
 				e.preventDefault();
 				
+				// 유효성 검사
 				let vali_check = false;
 				let vali_text = "";
-				if(form.mem_id.value == ''){
-					vali_text = "아이디를 입력하세요";
+				
+				if(form.mem_id.value == ""){
+					vali_text += '아이디를 입력하세요.';
 					form.mem_id.focus();
-				} else if(form.mem_pw.value == ''){
-					vali_text="비밀번호를 입력하세요";
+				}else if(form.mem_pw.value == ""){
+					vali_text += '비밀번호를 입력하세요.';
 					form.mem_pw.focus();
-				} else if(form.mem_pw_check.value == ''){
-					vali_text = "비밀번호 확인을 입력하세요.";
+				}else if(form.mem_pw_check.value == ""){
+					vali_text += '비밀번호를 입력하세요.';
 					form.mem_pw_check.focus();
-				} else if(form.mem_pw.value != form.mem_pw_check.value){
-					vali_text = "비밀번호가 일치하지 않습니다.";
+				}else if(form.mem_pw.value != form.mem_pw_check.value){
+					vali_text += '비밀번호가 일치하지 않습니다.';
 					form.mem_pw_check.focus();
-				} else if(form.mem_name.value == ''){
-					vali_text="이름을 입력하세요";
+				}else if(form.mem_name.value == ""){
+					vali_text += '이름을 입력하세요.';
 					form.mem_name.focus();
-				} else{
-					vali_check = true;	
+				}else{
+					vali_check = true;
 				}
 				
 				if(vali_check == false){
 					Swal.fire({
-						icon:'error',
-						title:'실패',
-						text: vali_text,
+						icon : 'error',
+						title : '실패',
+						text : vali_text,
 						confirmButtonText:"닫기"
-					}).then((result) => {
-						location.href="/login";
 					});
-				} else{
+				}else{
 					let obj = {};
 					const payload = new FormData(form);
-					payload.forEach(function(value,key){
+					payload.forEach(function(value, key){
 						obj[key] = value;
 					});
 					const jsonData = JSON.stringify(obj);
 					
 					const csrfToken = document.getElementById("csrf_token").value;
 					
-					/* console.log(jsonData,csrfToken); */
 					fetch('/join',{
-						method:'post',
+						method : 'post',
 						headers : {
 							"Content-Type": "application/json;charset=utf-8",
 							"Accept": "application/json",
@@ -85,7 +84,23 @@
 					})
 					.then(response => response.json())
 					.then(data => {
-						console.log(data);
+						if(data.res_code == '200'){
+							Swal.fire({
+								icon :'success',
+								title:'성공',
+								text : data.res_msg,
+								confirmButtonText:"닫기"
+							}).then((result)=>{
+								location.href="/login";
+							});
+						} else{
+							Swal.fire({
+								icon:'error',
+								title:'실패',
+								text: data.res_msg,
+								confirmButtonText:"닫기"
+							});
+						}
 					})
 				}
 			});
@@ -99,4 +114,4 @@
      
      
      
-</html>	
+</html>

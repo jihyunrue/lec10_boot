@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="navLayout">
-	<link th:href="@{/css/include/nav.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/include/nav.css}" 
+	rel="stylesheet" type="text/css">
 	<nav>
 		<div id="nav_wrap">
 			<div class="menu">
@@ -31,8 +32,6 @@
 			</div>
 			<div class="search" th:if="${searchDto != null}">
 				<form th:action="@{/board}" th:object="${searchDto}" method="get">
-					<!-- <input type="text" name="board_title" 
-					th:field="*{board_title}" placeholder="검색어를 입력하세요"> -->
 					<select name="search_type" th:value="${searchDto.search_type}">
 						<option th:value="1" th:selected="${searchDto.search_type} == '1'">제목</option>
 						<option th:value="2" th:selected="${searchDto.search_type} == '2'">내용</option>
@@ -45,14 +44,12 @@
 			</div>
 			<div class="search" th:if="${searchDto == null}">
 				<form th:action="@{/board}" method="get">
-					<!-- <input type="text" name="board_title" placeholder="검색어를 입력하세요"> -->
 					<select name="search_type">
 						<option th:value="1">제목</option>
 						<option th:value="2">내용</option>
 						<option th:value="3">제목+내용</option>
 					</select> 
-					<input type="text" name="search_text" 
-					 placeholder="검색어를 입력하세요">
+					<input type="text" name="search_text" placeholder="검색어를 입력하세요">
 					<input type="submit" value="검색">
 				</form>
 			</div>
