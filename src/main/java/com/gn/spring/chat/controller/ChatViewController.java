@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.gn.spring.chat.domain.ChatMsgDto;
 import com.gn.spring.chat.domain.ChatRoomDto;
 import com.gn.spring.chat.service.ChatService;
 import com.gn.spring.member.domain.MemberDto;
@@ -29,6 +31,20 @@ public class ChatViewController {
 	public ChatViewController(ChatService chatService, MemberService memberService) {
 		this.chatService = chatService;
 		this.memberService = memberService;
+	}
+	
+	@GetMapping("/chat/{room_no}")
+	public String startChatting(@PathVariable("room_no") Long room_no ,Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		
+		ChatRoomDto dto = chatService.selectChatRoomOne(room_no, memId);
+		model.addAttribute("dto",dto);
+		
+		List<ChatMsgDto> resultList = chatService.selectChatMsgList(room_no,memId);
+		model.addAttribute("resultList",resultList);
+		return "chat/detail";
 	}
 	
 	@GetMapping("/chat/create")

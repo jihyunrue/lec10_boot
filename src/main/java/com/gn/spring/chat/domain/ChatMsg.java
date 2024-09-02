@@ -3,12 +3,12 @@ package com.gn.spring.chat.domain;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.Id;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -25,10 +25,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class ChatMsg {
-	
+
 	@Id
 	@Column(name="chat_no")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long chatNo;
 	
 	@Column(name="chat_content")
@@ -48,8 +48,4 @@ public class ChatMsg {
 	@JoinColumn(name="room_no")
 	private ChatRoom chatRoom;
 
-	
-	
-	
-	
 }

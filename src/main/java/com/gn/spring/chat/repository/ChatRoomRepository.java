@@ -17,5 +17,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom,Long>{
 					"OR cr.toId = ?1 ")
 	Page<ChatRoom> findAllByfromIdAndtoId(String memId, Pageable pageable);
 	
+	ChatRoom findByroomNo(Long roomNo);
 	
 }
